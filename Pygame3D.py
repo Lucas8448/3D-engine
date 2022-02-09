@@ -1,7 +1,7 @@
 import third_dimension as td
 import pyglet
 
-batch = pyglet.graphics.Batch()
+pyglet.graphics.glEnable(pyglet.graphics.GL_DEPTH_TEST)
     
 class colours():
     BLACK = (0,   0,   0)
@@ -34,15 +34,23 @@ class Window():
         self.width = size[0]
         self.height = size[1]
         self.window = pyglet.window.Window(self.width, self.height, caption = title, vsync=True)
+        self.batch = pyglet.graphics.Batch()
 
     def run(self):
         pyglet.app.run()
+    
+    @self.window.event
+    def draw(self):
+        self.window.clear()
+        self.batch.draw()
 
     def clear(self):
         self.window.clear()
 
-    def draw(self):
-        batch.draw()
+    def size(self):
+        return self.size
+
+    
 
 class Camera(Window):
     def __init__(self, position=(0, 0, 0), rotation=(0, 0, 0)):
@@ -79,47 +87,49 @@ class Camera(Window):
         self.yaw = change[2]
         self.rotation = (self.roll, self.pitch, self.yaw)
 
+    def where(self):
+        return self.rotation, self.position
 
-camera = Camera()
 
-class Line(Window):
-    def init(self, ax, ay, az, bx, by, bz, width):
-        self.width = width
-        self.ax = ax
-        self.ay = ay
-        self.az = az
-        self.bx = bx
-        self.by = by
-        self.bz = bz
-        self.x1, self.y1 = td.convert(ax, ay, az, camera_position=(
-            camera.position), camera_rotation=(camera.rotation))
-        self.x2, self.y2 = td.convert(bx, by, bz, camera_position=(
-            camera.position), camera_rotation=(camera.rotation))
-        self.line = shapes.line(self.x1, self.y1, self.x2, self.y2, self.width, batch=batch)
 
-    def changePosition(self, ax, ay, az, bx, by, bz):
-        self.ax =+ ax
-        self.ay =+ ay
-        self.az =+ az
-        self.bx =+ bx
-        self.by =+ by
-        self.bz =+ bz
-        self.x1, self.y1 = td.convert(ax, ay, az, camera_position=(
-            camera.position), camera_rotation=(camera.rotation))
-        self.x2, self.y2 = td.convert(bx, by, bz, camera_position=(
-            camera.position), camera_rotation=(camera.rotation))
-        
-        self.line = shapes.line(self.x1, self.y1, self.x2, self.y2, self.width, batch=batch)
-
-    def setPosition(self, ax, ay, az, bx, by, bz):
-        self.ax = ax
-        self.ay = ay
-        self.az = az
-        self.bx = bx
-        self.by = by
-        self.bz = bz
-        self.x1, self.y1 = td.convert(ax, ay, az, camera_position=(
-            camera.position), camera_rotation=(camera.rotation))
-        self.x2, self.y2 = td.convert(bx, by, bz, camera_position=(
-            camera.position), camera_rotation=(camera.rotation))
-        self.line = shapes.line(self.x1, self.y1, self.x2, self.y2, self.width, batch=batch)
+#class Line(Window):
+#    def init(self, ax, ay, az, bx, by, bz, width):
+#        self.width = width
+#        self.ax = ax
+#        self.ay = ay
+#        self.az = az
+#        self.bx = bx
+#        self.by = by
+#        self.bz = bz
+#        self.x1, self.y1 = td.convert(ax, ay, az, camera_position=(
+#            camera.position), camera_rotation=(camera.rotation))
+#        self.x2, self.y2 = td.convert(bx, by, bz, camera_position=(
+#            camera.position), camera_rotation=(camera.rotation))
+#        self.line = shapes.line(self.x1, self.y1, self.x2, self.y2, self.width, batch=batch)
+#
+#    def changePosition(self, ax, ay, az, bx, by, bz):
+#        self.ax =+ ax
+#        self.ay =+ ay
+#        self.az =+ az
+#        self.bx =+ bx
+#        self.by =+ by
+#        self.bz =+ bz
+#        self.x1, self.y1 = td.convert(ax, ay, az, camera_position=(
+#            camera.position), camera_rotation=(camera.rotation))
+#        self.x2, self.y2 = td.convert(bx, by, bz, camera_position=(
+#            camera.position), camera_rotation=(camera.rotation))
+#        
+#        self.line = shapes.line(self.x1, self.y1, self.x2, self.y2, self.width, batch=batch)
+#
+#    def setPosition(self, ax, ay, az, bx, by, bz):
+#        self.ax = ax
+#        self.ay = ay
+#        self.az = az
+#        self.bx = bx
+#        self.by = by
+#        self.bz = bz
+#        self.x1, self.y1 = td.convert(ax, ay, az, camera_position=(
+#            camera.position), camera_rotation=(camera.rotation))
+#        self.x2, self.y2 = td.convert(bx, by, bz, camera_position=(
+#            camera.position), camera_rotation=(camera.rotation))
+#        self.line = shapes.line(self.x1, self.y1, self.x2, self.y2, self.width, batch=batch)
