@@ -1,7 +1,4 @@
-import Pygame3D as p3
+from engine import *
 
-window = p3.Window()
-camera = p3.Camera()
-
-
-window.run()
+engine = Engine()
+engine.run()
